@@ -97,14 +97,16 @@ export function AIAssistantPage() {
       );
       setLoading(false);
       // Update stats
-      const statsRaw = localStorage.getItem('bdla_stats');
-      if (statsRaw) {
-        try {
+      try {
+        const statsRaw = localStorage.getItem('bdla_stats');
+        if (statsRaw) {
           const stats = JSON.parse(statsRaw);
-          localStorage.setItem('bdla_stats', JSON.stringify({ ...stats, questions: stats.questions + 1 }));
-        } catch {
-          // ignore
+          if (stats && typeof stats.questions === 'number') {
+            localStorage.setItem('bdla_stats', JSON.stringify({ ...stats, questions: stats.questions + 1 }));
+          }
         }
+      } catch {
+        // Storage may be unavailable in private browsing; chat still works.
       }
     }, 900 + Math.random() * 600);
   };
