@@ -16,6 +16,9 @@ export function Layout() {
             </div>
             <Outlet />
           </main>
+          <footer className="mx-auto w-full max-w-6xl border-t border-navy/5 px-4 py-5 text-center text-xs text-muted lg:px-8">
+            Developed by <span className="font-semibold text-navy">Jahid and Rimi</span>
+          </footer>
         </div>
       </div>
       <MobileNav />
