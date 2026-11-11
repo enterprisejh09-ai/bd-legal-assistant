@@ -7,9 +7,16 @@
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
+    min-height: 100%;
   }
   body {
     @apply bg-surface text-ink font-sans;
+    min-width: 320px;
+    min-height: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+  #root {
+    min-height: 100%;
   }
   :lang(bn) {
     font-family: 'Noto Sans Bengali', sans-serif;
@@ -20,6 +27,16 @@
 }
 
 @layer components {
+  .app-shell {
+    /* Keep a fallback for older Safari, then use the dynamic viewport on modern iOS. */
+    height: 100vh;
+    height: 100dvh;
+  }
+  .app-scroll {
+    min-height: 0;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
   .card {
     @apply bg-white rounded-2xl shadow-card border border-navy/5;
   }
