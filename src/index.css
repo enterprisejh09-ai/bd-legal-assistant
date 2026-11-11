@@ -30,6 +30,7 @@
   .app-shell {
     /* Keep a fallback for older Safari, then use the dynamic viewport on modern iOS. */
     height: 100vh;
+    height: -webkit-fill-available;
     height: 100dvh;
   }
   .app-scroll {
