@@ -11,15 +11,25 @@ interface LanguageContextValue {
 
 const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
 
+function readSavedLanguage(): Lang {
+  try {
+    return localStorage.getItem('bdla_lang') === 'bn' ? 'bn' : 'en';
+  } catch {
+    // Storage can be unavailable in some browser privacy configurations.
+    return 'en';
+  }
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => {
-    const saved = localStorage.getItem('bdla_lang');
-    return saved === 'bn' ? 'bn' : 'en';
-  });
+  const [lang, setLangState] = useState<Lang>(readSavedLanguage);
 
   const setLang = (l: Lang) => {
     setLangState(l);
-    localStorage.setItem('bdla_lang', l);
+    try {
+      localStorage.setItem('bdla_lang', l);
+    } catch {
+      // Keep the selected language for this session even if storage is blocked.
+    }
   };
 
   const toggle = () => setLang(lang === 'en' ? 'bn' : 'en');
